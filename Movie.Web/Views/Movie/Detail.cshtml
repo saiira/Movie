@@ -1,0 +1,190 @@
+﻿@model MovieDetailViewModel
+@{
+    ViewData["Title"] = "Movie Detail";
+}
+
+@if ( (Model != null) && (Model.MovieDetail != null))
+{
+    @section jsonLdSection
+        {
+        @if (!string.IsNullOrEmpty(Model.JsonLDMovie))
+        {
+            <script type="application/ld+json">
+                @Html.Raw(Model.JsonLDMovie)
+
+            </script>
+        }
+    }
+    <div class="card">
+        <div class="card-header">
+            Movie : <b> @Model.MovieDetail.Title </b>
+        </div>
+
+        <div class="card-body">
+
+            @if (!string.IsNullOrEmpty(Model.MovieDetail.Poster))
+            {
+                if (Model.MovieDetail.Poster.Trim().ToUpper() == "N/A")
+                {
+                    <!-- for movie Ultimate Avengers , last 2 records dont have the image-->
+                    <img class="image-movie-detail" src="~/images/image-not-available.jpg" />
+                }
+                else
+                {
+                    <img class="image-movie-detail" src="@(Model.MovieDetail.Poster)" />
+                }
+            }
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Year</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Year</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Language</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Language</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Country</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Country</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Rated</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Rated</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Released</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Released</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Runtime</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Runtime</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Genre</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Genre</label>
+                </div>
+            </div>
+
+            @if(@Model.MovieDetail.Ratings.Count() > 0)
+            { 
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Ratings</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-2 col-form-label">@Model.MovieDetail.Ratings[0].Value</label>
+                </div>
+            </div>}
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Metascore</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Metascore</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">imdbRating</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.imdbRating</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">imdbVotes</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.imdbVotes</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">imdbID</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.imdbID</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Type</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Type</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">DVD</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.DVD</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">BoxOffice</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.BoxOffice</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Production</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Production</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Website</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Website</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Response</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Response</label>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Director</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Director</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Writer</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Writer</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Actors</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Actors</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Plot</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Plot</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Awards</label>
+                <div class="col-sm-10">
+                    <label class="col-sm-12 col-form-label">@Model.MovieDetail.Awards</label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+}
+

@@ -1,0 +1,113 @@
+﻿@model MovieViewModel
+@{
+
+    ViewData["Title"] = "Search Movie";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        Search Movie
+    </div>
+    <form class="form-inline" asp-controller="Movie" asp-action="Search">
+        @if ((Model != null) && (!string.IsNullOrEmpty(Model.Message)))
+        {
+            <div class="alert alert-danger validation-summary-errors">@Html.Raw(Model.Message)</div>
+            <br />
+        }
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+
+
+            <div class="form-group mb-2">
+
+                <input type="text" asp-for="SearchPhrase" class="form-control" placeholder="Search string here">
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+
+        </div>
+    </form>
+</div>
+@if (Model != null)
+{
+
+}
+<div class="card">
+    @if ((Model != null) && (Model.SearchResult != null) && (Model.SearchResult.Search != null))
+    {
+        @if (Model.SearchResult.Search.Count() > 0)
+        {
+            @section jsonLdSection
+                {
+                @if (!string.IsNullOrEmpty(Model.JsonLDSummary))
+                {
+                    <script type="application/ld+json">
+                        @Html.Raw(Model.JsonLDSummary)
+
+                    </script>
+                }
+            }
+            <br />
+            <div class="row alert alert-success" role="alert">
+                Results for Movie  "<b>@Model.SearchPhrase.</b>". Found @Model.SearchResult.Search.Count() records.
+            </div>
+            <div class="row movie-search-result-row">
+                @for (var i = 0; i < Model.SearchResult.Search.Count(); i++)
+                {
+                    string movieDtailLink = string.Empty;
+                    if (string.IsNullOrEmpty(Model.SearchResult.Search[i].imdbID))
+                    {
+                        movieDtailLink = "#";
+                    }
+                    else
+                    {
+                        movieDtailLink = @Url.Action("getmoviedetail", "movie", new { imdbID = Model.SearchResult.Search[i].imdbID });
+                    }
+
+                    <div class="column">
+                        <div class="card movie-search-result-card" >
+                            <a class="body-img-link" href=@(movieDtailLink)>
+                                @if (!string.IsNullOrEmpty(Model.SearchResult.Search[i].Poster))
+                                {
+                                    if (Model.SearchResult.Search[i].Poster.Trim().ToUpper() == "N/A")
+                                    {
+                                        <!-- for movie Ultimate Avengers , last 2 records dont have the image-->
+                                        <img class="card-img-top" src="~/images/image-not-available.jpg" />
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top" src="@(Model.SearchResult.Search[i].Poster)" />
+                                    }
+                                }
+
+                                <div class="card-body">
+                                    <p class="card-text movie-search-result-card-text">
+                                        <strong> @Model.SearchResult.Search[i].Title </strong><br />
+                                        Year :  @Model.SearchResult.Search[i].Year
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+
+        }
+
+    }
+    else
+    {
+        if ((Model != null) && (Model.SearchPhrase != null) && (Model.SearchPhrase.Trim() != string.Empty))
+        {
+            <span>Model.SearchPhrase : @Model.SearchPhrase</span>
+            <div class="row alert alert-danger" role="alert">
+                No result found for Movie  "<b>@Model.SearchPhrase.</b>".
+            </div>
+        }
+
+    }
+
+</div>
